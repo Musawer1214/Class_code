@@ -1,2 +1,10 @@
-This is a test notebook to be used during coding
-This is the new line written by code to the test file
+YOu can change class that resembles to reallife scenario but it must be something related to cars and can have only one objects in both of these class. 
+Also it gives this error 
+PS C:\Users\Musawer-Hussain\OneDrive\Desktop\Class_code> javac relationclass.java
+PS C:\Users\Musawer-Hussain\OneDrive\Desktop\Class_code> java relationclass
+Error: Could not find or load main class relationclass
+Caused by: java.lang.ClassNotFoundException: relationclass
+
+
+
+Also explain the code according to my question
