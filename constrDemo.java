@@ -1,9 +1,9 @@
 public class constrDemo {
 
-    // === Q1: FIELD INITIALIZER ===
+    // === Q1: 
     private final TeamMember ceo = new TeamMember("Ava Harper", "CEO");
 
-    // === Q2: INSTANCE INITIALIZER ===
+    // === Q2: 
     {
         System.out.println("== Setting up onboarding kit ==");
         ResourceAccess starterLaptop = new ResourceAccess("Laptop Provisioning");
@@ -27,7 +27,7 @@ public class constrDemo {
     public static void main(String[] args) {
         new constrDemo("Alpha Delivery Team");
     }
-    // === HELPER CLASSES ===
+    
 
     private static class TeamMember {
         private final String name;
@@ -38,9 +38,6 @@ public class constrDemo {
             this.role = role;
             System.out.println("Team member record created: " + name + " (" + role + ")");
         }
-
-
-
         void printBadge() {
             System.out.println("Printing badge for " + name + " - " + role);
         }

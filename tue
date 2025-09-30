@@ -1,0 +1,87 @@
+// Q1: "Initialize objects without a method/constructor?"
+//      In Java, you still put code inside a class, but you can initialize objects
+//      *outside* of any method/constructor using:
+//      (a) Field initialization (runs first for each new object)
+//      (b) Instance initializer block { ... } (runs next, before constructors)
+//
+// Q2: "Using a constructor?"
+//      Constructors finish setting up the object after field + instance initializer run.
+//
+// Q3: "Call one constructor from another with this(...) at the START"
+//      Use this(); as the very first line inside a constructor to reuse another constructor.
+
+public class constrDemo {
+
+    // === Q1(a): FIELD INITIALIZATION ===
+    // This creates a TeamMember BEFORE any constructor body runs.
+    private final TeamMember ceo = new TeamMember("Ava Harper", "CEO");
+
+    // === Q1(b): INSTANCE INITIALIZER BLOCK ===
+    // This block runs for EVERY new constrDemo object,
+    // right AFTER field initializers and RIGHT BEFORE the constructor.
+    {
+        System.out.println("== Setting up onboarding kit ==");
+        ResourceAccess starterLaptop = new ResourceAccess("Laptop Provisioning");
+        starterLaptop.provision();
+    }
+
+    // === Q2: CONSTRUCTOR (no-arg) ===
+    // This is the default constructor. It runs AFTER the field initialization
+    // and the instance initializer block have completed.
+    public constrDemo() {
+        System.out.println("Onboarding team for new Project Alpha.");
+    }
+
+    // === Q2 + Q3: OVERLOADED CONSTRUCTOR that CALLS another constructor ===
+    // The first line "this();" calls the no-arg constructor above.
+    // Q3 requires that this(...) be the FIRST statement in the constructor.
+    public constrDemo(String teamName) {
+        this(); // Q3: constructor chaining—reuses default constructor setup first
+        System.out.println("Creating project resources for team: " + teamName);
+
+        // This extra setup is specific to the (String) constructor.
+        TeamMember lead = new TeamMember("Jordan Ellis", "Project Lead");
+        lead.printBadge();
+    }
+
+    public static void main(String[] args) {
+        // Triggers the full creation sequence:
+        // Order when creating a new object:
+        //   1) Field initializers (ceo)
+        //   2) Instance initializer block
+        //   3) Constructor body (here, the String constructor)
+        //      -> which first calls this() (the no-arg constructor),
+        //      -> then continues with its own lines.
+        new constrDemo("Alpha Delivery Team");
+    }
+
+    // Helper class to show side effects during initialization/constructors
+    private static class TeamMember {
+        private final String name;
+        private final String role;
+
+        TeamMember(String name, String role) {
+            this.name = name;
+            this.role = role;
+            System.out.println("Team member record created: " + name + " (" + role + ")");
+        }
+
+        void printBadge() {
+            System.out.println("Printing badge for " + name + " - " + role);
+        }
+    }
+
+    // Another helper class to show provisioning in the initializer block
+    private static class ResourceAccess {
+        private final String resourceName;
+
+        ResourceAccess(String resourceName) {
+            this.resourceName = resourceName;
+            System.out.println(resourceName + " resource instantiated.");
+        }
+
+        void provision() {
+            System.out.println("Provisioning " + resourceName + " to new hire.");
+        }
+    }
+}
